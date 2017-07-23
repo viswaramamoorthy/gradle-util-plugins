@@ -1,0 +1,91 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = 'gradle-util-plugins'
+version = '0.1.0-RELEASE'
+
+sourceCompatibility = 1.8
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Util Plugins',
+        'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+}
+
+task javadocJar(type: Jar, dependsOn:groovydoc) {
+    classifier = 'javadoc'
+    from docsDir
+}
+
+task sourcesJar(type: Jar, dependsOn:classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+
+      pom.project {
+        name 'Gradle util plugins'
+        packaging 'jar'
+        description 'Gradle utility plugins'
+
+        scm {
+          connection 'scm:git:git://github.com/viswaramamoorthy/gradle-util-plugins.git'
+          developerConnection 'scm:git:ssh://github.com:viswaramamoorthy/gradle-util-plugins.git'
+          url 'https://github.com/viswaramamoorthy/gradle-util-plugins/tree/master'
+        }
+
+        licenses {
+          license {
+            name 'MIT License'
+            url 'http://www.opensource.org/licenses/mit-license.php'
+          }
+        }
+
+        developers {
+          developer {
+            id 'viramamoorthy'
+            name 'Viswa Ramamoorthy'
+            email 'viramamoorthy@gmail.com'
+          }
+        }
+      }
+    }
+  }
+}
