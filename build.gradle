@@ -9,7 +9,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-group = 'io.github.vr'
+group = 'com.github.viswaramamoorthy'
 version = '0.1.0-RELEASE'
 
 sourceCompatibility = 1.8
