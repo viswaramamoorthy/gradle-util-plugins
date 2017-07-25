@@ -2,12 +2,17 @@ buildscript {
     repositories {
         mavenCentral()
     }
+
+	dependencies {
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.9.0"
+    }
 }
 
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'io.codearte.nexus-staging'
 
 group = 'com.github.viswaramamoorthy'
 version = '0.1.0-RELEASE'
@@ -64,6 +69,7 @@ uploadArchives {
         name 'Gradle util plugins'
         packaging 'jar'
         description 'Gradle utility plugins'
+        url 'https://github.com/viswaramamoorthy/gradle-util-plugins'
 
         scm {
           connection 'scm:git:git://github.com/viswaramamoorthy/gradle-util-plugins.git'
@@ -80,7 +86,7 @@ uploadArchives {
 
         developers {
           developer {
-            id 'viramamoorthy'
+            id 'viswaramamoorthy'
             name 'Viswa Ramamoorthy'
             email 'viramamoorthy@gmail.com'
           }
