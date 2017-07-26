@@ -6,11 +6,12 @@ With large number of classpath dependencies in a large project, this would a sto
 
 ManifestClasspath plugin creates a manifest jar for jars files in classpath for JavaExec task and sets the classpath with manifest jar.
 
-Usage
+### Usage
 
 To use the plugin, define a dependency in build script and have plugin entry in Gradle project.
 
 build.gradle snippet to use ManifestClasspath plugin
+```
 ....
 buildscript {
     repositories {
@@ -23,6 +24,7 @@ buildscript {
 }
 ....
 apply plugin: 'ManifestClasspath'
+```
 
-Build
+### Build
 ./gradelw build
