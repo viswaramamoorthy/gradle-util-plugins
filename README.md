@@ -1,10 +1,10 @@
 # gradle-util-plugins
 
-When classpath for Gradle JavaExec task is long, Windows command executions give error because limitation to length of command line 32K.
+When classpath for a Gradle JavaExec task is long, Windows command executions give error because of limitation to command line length greater than 32K.
 
-With large number of classpath dependencies in a large project, this would a stopping error. To solve this issue, use ManifestClasspath plugin.
+With a number of classpath dependencies in a large project, typically JavaExec Gradle task fails with error "The filename or extension is too long" and this would be a stopping error. To solve this issue, use ManifestClasspath plugin.
 
-ManifestClasspath plugin creates a manifest jar for jars files in classpath for JavaExec task and sets the classpath with manifest jar.
+ManifestClasspath plugin creates a manifest jar for jar files in the classpath of JavaExec task and sets the classpath with manifest jar.
 
 ### Usage
 
