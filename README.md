@@ -27,4 +27,4 @@ apply plugin: 'ManifestClasspath'
 ```
 
 ### Build
-./gradelw build
+./gradlew build
