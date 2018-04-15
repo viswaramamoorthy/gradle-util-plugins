@@ -1,0 +1,14 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+trim_trailing_whitespace = true
+indent_style = space
+
+[*.{java,groovy}]
+indent_size = 4
+
+[*.{yml,yaml,conf,json}]
+indent_size = 2

@@ -1,0 +1,24 @@
+= gradle-util-plugins
+:pluginId: com.github.ManifestClasspath
+:pluginVersion: 0.1.0-RELEASE
+:toc: macro
+
+image:https://api.travis-ci.org/viswaramamoorthy/gradle-util-plugins.svg?branch=master["Build Status", link="https://travis-ci.org/viswaramamoorthy/gradle-util-plugins"]
+
+toc::[]
+
+== Overview
+
+When classpath for a Gradle `JavaExec` or `Test` task is long, Windows command executions give error because of limitation to command line length greater than 32K.
+
+With a number of classpath dependencies in a large project, typically JavaExec Gradle task fails with error "The filename or extension is too long" and this would be a stopping error. To solve this issue, use ManifestClasspath plugin.
+
+`ManifestClasspath` plugin creates a manifest jar for jar files in the classpath
+of every https://docs.gradle.org/current/javadoc/org/gradle/process/JavaForkOptions.html[JavaForkOptions] task and sets the classpath with manifest jar.
+This includes `JavaExec`, `Test` and other similar tasks.
+
+== Installation
+
+Follow the steps described at https://plugins.gradle.org/plugin/com.github.ManifestClasspath[Gradle Plugin Portal page].
+
+

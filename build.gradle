@@ -6,17 +6,16 @@ buildscript {
         }
     }
 
-	dependencies {
+    dependencies {
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.9.0"
         classpath "com.gradle.publish:plugin-publish-plugin:0.9.10"
     }
 }
 
 apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+apply plugin: 'java-gradle-plugin'
 apply plugin: 'eclipse'
-apply plugin: 'maven'
-apply plugin: 'signing'
-apply plugin: 'io.codearte.nexus-staging'
 apply plugin: 'com.gradle.plugin-publish'
 
 group = 'com.github.viswaramamoorthy'
@@ -26,91 +25,42 @@ sourceCompatibility = 1.8
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Gradle Util Plugins',
-        'Implementation-Version': version
+        attributes 'Implementation-Title': 'Gradle Util Plugins', 'Implementation-Version': version
     }
 }
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     compile gradleApi()
-}
-
-task javadocJar(type: Jar, dependsOn:groovydoc) {
-    classifier = 'javadoc'
-    from docsDir
-}
-
-task sourcesJar(type: Jar, dependsOn:classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives javadocJar, sourcesJar
-}
-
-signing {
-    sign configurations.archives
-}
-
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }
-
-      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }
-
-      pom.project {
-        name 'Gradle util plugins'
-        packaging 'jar'
-        description 'Gradle utility plugins'
-        url 'https://github.com/viswaramamoorthy/gradle-util-plugins'
-
-        scm {
-          connection 'scm:git:git://github.com/viswaramamoorthy/gradle-util-plugins.git'
-          developerConnection 'scm:git:ssh://github.com:viswaramamoorthy/gradle-util-plugins.git'
-          url 'https://github.com/viswaramamoorthy/gradle-util-plugins/tree/master'
-        }
-
-        licenses {
-          license {
-            name 'MIT License'
-            url 'http://www.opensource.org/licenses/mit-license.php'
-          }
-        }
-
-        developers {
-          developer {
-            id 'viswaramamoorthy'
-            name 'Viswa Ramamoorthy'
-            email 'viramamoorthy@gmail.com'
-          }
-        }
-      }
+    testCompile gradleTestKit()
+    testCompile 'commons-io:commons-io:2.5'
+    testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
+        exclude module: 'groovy-all'
     }
-  }
+}
+
+gradlePlugin {
+    plugins {
+        manifestClasspathPlugin {
+            id = 'com.github.ManifestClasspath'
+            implementationClass = "vr.plugin.ManifestClasspathPlugin"
+        }
+    }
 }
 
 pluginBundle {
-  website = 'http://www.gradle.org/'
-  vcsUrl = 'https://github.com/gradle/gradle'
-  description = 'Fix for windows gradle long classpath issue. Fixes JavaExec tasks that error out with message "CreateProcess error=206, The filename or extension is too long"'
-  tags = ['classpath-issue', 'windows-gradle-long-classpath', 'manifestclasspath-plugin', 'javaexec-task', 'CreateProcess error=206']
+    website = 'http://www.gradle.org/'
+    vcsUrl = 'https://github.com/gradle/gradle'
+    description = 'Fix for windows gradle long classpath issue. Fixes JavaExec/Test tasks that error out with message "CreateProcess error=206, The filename or extension is too long"'
+    tags = ['classpath-issue', 'windows-gradle-long-classpath', 'manifestclasspath-plugin', 'javaexec-task', 'CreateProcess error=206']
 
-  plugins {
-    manifestClasspathPlugin {
-      id = 'com.github.ManifestClasspath'
-      displayName = 'Gradle Manifest Classpath plugin'
+    plugins {
+        manifestClasspathPlugin {
+            id = 'com.github.ManifestClasspath'
+            displayName = 'Gradle Manifest Classpath plugin'
+        }
     }
-  }
 }

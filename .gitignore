@@ -16,4 +16,7 @@ gradle-app.setting
 .classpath
 .project
 local-publish.properties
+.idea/
+*.iml
+out
 
