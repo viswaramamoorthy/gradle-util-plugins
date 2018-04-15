@@ -11,19 +11,26 @@ ManifestClasspath plugin creates a manifest jar for jar files in the classpath o
 To use the plugin, define a dependency in build script and have plugin entry in Gradle project.
 
 build.gradle snippet to use ManifestClasspath plugin
+##### Build script snippet for plugins DSL for Gradle 2.1 and later
 ```
-....
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-	dependencies {
-        classpath "com.github.viswaramamoorthy:gradle-util-plugins:0.1.0-RELEASE"
-    }
+plugins {
+  id "com.github.ManifestClasspath" version "0.1.0-RELEASE"
 }
-....
-apply plugin: 'ManifestClasspath'
+```
+##### Build script snippet for use in older Gradle versions or where dynamic configuration is required
+```
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "gradle.plugin.com.github.viswaramamoorthy:gradle-util-plugins:0.1.0-RELEASE"
+  }
+}
+
+apply plugin: "com.github.ManifestClasspath"
 ```
 
 ### Build

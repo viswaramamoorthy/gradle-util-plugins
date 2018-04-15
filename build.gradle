@@ -1,10 +1,14 @@
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
 	dependencies {
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.9.0"
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.10"
     }
 }
 
@@ -13,6 +17,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'io.codearte.nexus-staging'
+apply plugin: 'com.gradle.plugin-publish'
 
 group = 'com.github.viswaramamoorthy'
 version = '0.1.0-RELEASE'
@@ -92,6 +97,20 @@ uploadArchives {
           }
         }
       }
+    }
+  }
+}
+
+pluginBundle {
+  website = 'http://www.gradle.org/'
+  vcsUrl = 'https://github.com/gradle/gradle'
+  description = 'Fix for windows gradle long classpath issue. Fixes JavaExec tasks that error out with message "CreateProcess error=206, The filename or extension is too long"'
+  tags = ['classpath-issue', 'windows-gradle-long-classpath', 'manifestclasspath-plugin', 'javaexec-task', 'CreateProcess error=206']
+
+  plugins {
+    manifestClasspathPlugin {
+      id = 'com.github.ManifestClasspath'
+      displayName = 'Gradle Manifest Classpath plugin'
     }
   }
 }
