@@ -14,7 +14,7 @@ build.gradle snippet to use ManifestClasspath plugin
 ##### Build script snippet for plugins DSL for Gradle 2.1 and later
 ```
 plugins {
-  id "com.github.ManifestClasspath" version "0.1.0-RELEASE"
+  id "com.github.ManifestClasspath" version "0.2.0-RELEASE"
 }
 ```
 ##### Build script snippet for use in older Gradle versions or where dynamic configuration is required
@@ -26,7 +26,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.com.github.viswaramamoorthy:gradle-util-plugins:0.1.0-RELEASE"
+    classpath "gradle.plugin.com.github.viswaramamoorthy:gradle-util-plugins:0.2.0-RELEASE"
   }
 }
 

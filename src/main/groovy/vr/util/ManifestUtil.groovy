@@ -34,9 +34,21 @@ class ManifestUtil
         if (!fileCollection)
             return
         def classPathString = fileCollection.files.collect {
-                                it.toURL().toString()
+                                toClassPathEntry(it)
                               }.join(' ')
         createManifestJar(jarFile, manifestWithClasspath(classPathString))
+    }
+
+    /**
+     * Convert a file to its URL, with any spaces in the path replaced by {@ %20} so that directories
+     * containing spaces in their names in the classpath will be properly processed when running.
+     *
+     * @param element file to convert to string for inclusion in classpath
+     * @return classpath string referencing given file, as described
+     */
+    private static String toClassPathEntry(File element) {
+        String path = element.toURL().toString()
+        return path.replaceAll(' ', '%20')
     }
 
     private static def createManifestJar(def jarFile, def manifest = null) throws IOException {
