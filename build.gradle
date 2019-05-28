@@ -20,7 +20,7 @@ apply plugin: 'io.codearte.nexus-staging'
 apply plugin: 'com.gradle.plugin-publish'
 
 group = 'com.github.viswaramamoorthy'
-version = '0.1.0-RELEASE'
+version = '0.2.0-RELEASE'
 
 sourceCompatibility = 1.8
 
